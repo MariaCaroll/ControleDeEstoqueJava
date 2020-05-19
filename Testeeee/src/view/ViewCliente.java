@@ -129,7 +129,7 @@ public class ViewCliente extends JFrame {
 		panel.add(txtCep);
 		txtCep.setColumns(10);
 		
-		JLabel lblNewLabel_7 = new JLabel("Telefone");
+		JLabel lblNewLabel_7 = new JLabel("Fone");
 		lblNewLabel_7.setBounds(430, 131, 46, 14);
 		panel.add(lblNewLabel_7);
 		
