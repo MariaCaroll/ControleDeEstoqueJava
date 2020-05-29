@@ -7,7 +7,7 @@ public class Formatador {
      * @param pString
      * @return double
      */
-    public double converterVirgulaParaPonto(String pString){
+    public float converterVirgulaParaPonto(String pString){
         String retorno = new String();
         int tamanhoString = pString.length();
         for(int i = 0; i < tamanhoString; i++){
@@ -17,7 +17,7 @@ public class Formatador {
                 retorno += pString.charAt(i);
             }
         }
-        return Double.parseDouble(retorno);
+        return Float.parseFloat(retorno);
     }
 
 }

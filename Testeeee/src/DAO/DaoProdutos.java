@@ -133,7 +133,7 @@ public class DaoProdutos extends ConexaoMsql {
 			while (this.getResultSet().next()) {
 				modelProdutos.setIdProduto(this.getResultSet().getInt(1));
 				modelProdutos.setProNome(this.getResultSet().getString(2));
-				modelProdutos.setProValor(this.getResultSet().getDouble(3));
+				modelProdutos.setProValor(this.getResultSet().getFloat(3));
 				modelProdutos.setproEstoque(this.getResultSet().getInt(4));
 
 			}
@@ -167,7 +167,7 @@ public class DaoProdutos extends ConexaoMsql {
 			while (this.getResultSet().next()) {
 				modelProdutos.setIdProduto(this.getResultSet().getInt(1));
 				modelProdutos.setProNome(this.getResultSet().getString(2));
-				modelProdutos.setProValor(this.getResultSet().getDouble(3));
+				modelProdutos.setProValor(this.getResultSet().getFloat(3));
 				modelProdutos.setproEstoque(this.getResultSet().getInt(4));
 
 			}
@@ -225,7 +225,7 @@ public class DaoProdutos extends ConexaoMsql {
 				modelProdutos = new ModelProdutos();
 				modelProdutos.setIdProduto(this.getResultSet().getInt(1));
 				modelProdutos.setProNome(this.getResultSet().getString(2));
-				modelProdutos.setProValor(this.getResultSet().getDouble(3));
+				modelProdutos.setProValor(this.getResultSet().getFloat(3));
 				modelProdutos.setproEstoque(this.getResultSet().getInt(4));
 
 				listaModelProdutos.add(modelProdutos);

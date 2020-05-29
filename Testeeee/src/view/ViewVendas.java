@@ -512,8 +512,8 @@ public class ViewVendas extends JInternalFrame {
 			// add uma linha na tabela
 			DefaultTableModel modelo = (DefaultTableModel) tbCadastro.getModel();
 			int cont = 0;
-			double quantidade = 0;
-			quantidade = Double.parseDouble(txtQuantidade.getText());
+			int quantidade = 0;
+			quantidade = Integer.parseInt(txtQuantidade.getText());
 			for (int i = 0; i < cont; i++) {
 				modelo.setNumRows(0);
 
@@ -525,11 +525,11 @@ public class ViewVendas extends JInternalFrame {
 	}
 
 	private void subTotal() {
-		double soma = 0, valor;
+		float soma = 0, valor;
 
 		int cont = tbCadastro.getRowCount();
 		for (int i = 0; i < cont; i++) {
-			valor = (double) tbCadastro.getValueAt(i, 4);
+			valor = (float) tbCadastro.getValueAt(i, 4);
 			soma = soma + valor;
 
 		}
@@ -541,7 +541,7 @@ public class ViewVendas extends JInternalFrame {
 	private void desconto() {
 		try {
 			txtSubtotal.setText(
-					String.valueOf(Double.parseDouble(txtSubtotal.getText()) - Double.parseDouble(txtDesconto.getText())));
+					String.valueOf(Float.parseFloat(txtSubtotal.getText()) - Float.parseFloat(txtDesconto.getText())));
 		} catch (NumberFormatException e) {
 			// TODO: handle exception
 		}
@@ -574,11 +574,11 @@ public class ViewVendas extends JInternalFrame {
 		
 		int codVenda = 0;
 		int codigoProduto = 0;
-		double desconto = 0;
+		float desconto = 0;
 		
 		listaModelVendasClientes = new ArrayList<ModelVendasCliente>();
 		
-		desconto = Double.parseDouble(txtSubtotal.getText());
+		desconto = Float.parseFloat(txtSubtotal.getText());
 	
 		
 		modelVendas.setCliente(Integer.parseInt(txtCodCliente.getText()));
@@ -590,8 +590,8 @@ public class ViewVendas extends JInternalFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		modelVendas.setVenValorLiquido(Double.parseDouble(txtSubtotal.getText()));
-		modelVendas.setVenValorBruto(Double.parseDouble(txtDesconto.getText()) + desconto);
+		modelVendas.setVenValorLiquido(Float.parseFloat(txtSubtotal.getText()));
+		modelVendas.setVenValorBruto((float) (Float.parseFloat(txtDesconto.getText()) + desconto));
 		modelVendas.setVenDesconto(desconto);
 	
 	
@@ -611,7 +611,7 @@ public class ViewVendas extends JInternalFrame {
 			modelProduto = new ModelProdutos();
 			modelVendasProdutos.setProduto(codigoProduto);
 			modelVendasProdutos.setVendas(codVenda);
-			modelVendasProdutos.setVenProValor((double) tbCadastro.getValueAt(i, 3));
+			modelVendasProdutos.setVenProValor((float) tbCadastro.getValueAt(i, 3));
 			modelVendasProdutos.setVenProQuantidade(Integer.parseInt( tbCadastro.getValueAt(i, 2).toString()));
 			
 			//baixa no estoque

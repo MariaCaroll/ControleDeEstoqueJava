@@ -42,7 +42,7 @@ public class DAOProdutosVendasProdutos extends ConexaoMsql{
 				
 				modelProdutos.setIdProduto(this.getResultSet().getInt(1));
 				modelProdutos.setProNome(this.getResultSet().getString(2));
-				modelProdutos.setProValor(this.getResultSet().getDouble(3));
+				modelProdutos.setProValor(this.getResultSet().getFloat(3));
 				modelProdutos.setproEstoque(this.getResultSet().getInt(4));
 		
 				
@@ -50,7 +50,7 @@ public class DAOProdutosVendasProdutos extends ConexaoMsql{
 				modelVendasProdutos.setVendas(this.getResultSet().getInt(6));
 				modelVendasProdutos.setIdVendaProduto(this.getResultSet().getInt(7));
 				modelVendasProdutos.setVenProQuantidade(this.getResultSet().getInt(8));
-				modelVendasProdutos.setVenProValor(this.getResultSet().getDouble(9));
+				modelVendasProdutos.setVenProValor(this.getResultSet().getFloat(9));
 			
 				modelProdutosVendasProdutos.setModelProdutos(modelProdutos);
 				modelProdutosVendasProdutos.setModelVendasProdutos(modelVendasProdutos);

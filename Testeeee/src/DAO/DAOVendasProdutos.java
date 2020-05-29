@@ -68,7 +68,7 @@ public class DAOVendasProdutos extends ConexaoMsql {
                 modelVendasProdutos.setIdVendaProduto(this.getResultSet().getInt(1));
                 modelVendasProdutos.setProduto(this.getResultSet().getInt(2));
                 modelVendasProdutos.setVendas(this.getResultSet().getInt(3));
-                modelVendasProdutos.setVenProValor(this.getResultSet().getDouble(4));
+                modelVendasProdutos.setVenProValor(this.getResultSet().getFloat(4));
                 modelVendasProdutos.setVenProQuantidade(this.getResultSet().getInt(5));
             }
         }catch(Exception e){
@@ -105,7 +105,7 @@ public class DAOVendasProdutos extends ConexaoMsql {
                 modelVendasProdutos.setIdVendaProduto(this.getResultSet().getInt(1));
                 modelVendasProdutos.setProduto(this.getResultSet().getInt(2));
                 modelVendasProdutos.setVendas(this.getResultSet().getInt(3));
-                modelVendasProdutos.setVenProValor(this.getResultSet().getDouble(4));
+                modelVendasProdutos.setVenProValor(this.getResultSet().getFloat(4));
                 modelVendasProdutos.setVenProQuantidade(this.getResultSet().getInt(5));
                 listamodelVendasProdutos.add(modelVendasProdutos);
             }

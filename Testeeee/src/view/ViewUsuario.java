@@ -3,40 +3,39 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import controller.ControllerCliente;
 import controller.ControllerUsuario;
-import model.ModelCliente;
 import model.ModelUsuario;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Font;
 
 public class ViewUsuario extends JInternalFrame {
 	private JTextField txtCod;
@@ -50,6 +49,7 @@ public class ViewUsuario extends JInternalFrame {
 	ControllerUsuario controllerUsuario = new ControllerUsuario();
 	ModelUsuario modelUsuario = new ModelUsuario();
 	ArrayList<ModelUsuario> listaModelUsuarios = new ArrayList<>();
+	private JComboBox cbNivel;
 
 	/**
 	 * Launch the application.
@@ -71,6 +71,7 @@ public class ViewUsuario extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ViewUsuario() {
+		setBackground(new Color(204, 102, 102));
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameOpened(InternalFrameEvent e) {
@@ -89,6 +90,7 @@ public class ViewUsuario extends JInternalFrame {
 		
 		 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(204, 102, 102));
 		panel.setBounds(0, 0, 715, 383);
 		getContentPane().add(panel);
 		panel.setLayout(null);
@@ -153,14 +155,14 @@ public class ViewUsuario extends JInternalFrame {
 		});
 		tbUsu.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
-				"ID", "Nome", "Login", "Senha"
+				"ID", "Nome", "Login", "Senha", "N\u00EDvel"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false
+				false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -243,10 +245,16 @@ public class ViewUsuario extends JInternalFrame {
 		btnAdd.setBounds(605, 286, 80, 80);
 		panel.add(btnAdd);
 		
-		JLabel lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon(ViewUsuario.class.getResource("/background/Alive.jpg")));
-		lblNewLabel_5.setBounds(0, 0, 715, 383);
-		panel.add(lblNewLabel_5);
+		cbNivel = new JComboBox();
+		cbNivel.setModel(new DefaultComboBoxModel(new String[] {"CAIXA", "ADMIN", "ESTOQUE"}));
+		cbNivel.setBounds(551, 86, 113, 26);
+		panel.add(cbNivel);
+		
+		JLabel lblNewLabel_3_1 = new JLabel("N\u00EDvel");
+		lblNewLabel_3_1.setForeground(Color.WHITE);
+		lblNewLabel_3_1.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_3_1.setBounds(551, 65, 55, 16);
+		panel.add(lblNewLabel_3_1);
 
 	}
 	private void habilitarButtons(boolean condicao) {
@@ -275,7 +283,7 @@ public class ViewUsuario extends JInternalFrame {
 		int cont = listaModelUsuarios.size();
 		for (int i = 0; i < cont; i++) {
 			modelo.addRow(new Object[] { listaModelUsuarios.get(i).getIdUsuario(), listaModelUsuarios.get(i).getUsuNome(),
-					listaModelUsuarios.get(i).getUsuLogin(), listaModelUsuarios.get(i).getUsuSenha(), });
+					listaModelUsuarios.get(i).getUsuLogin(), listaModelUsuarios.get(i).getUsuSenha(), listaModelUsuarios.get(i).getUsuNivel(),});
 
 		}
 		
@@ -294,6 +302,8 @@ public class ViewUsuario extends JInternalFrame {
 	  txtNome.setText(modelUsuario.getUsuNome());
 	  txtLogin.setText(modelUsuario.getUsuLogin());
 	  psSenha.setText(modelUsuario.getUsuSenha());
+	  cbNivel.setSelectedItem(modelUsuario.getUsuNivel());
+	  
 
 	  btnAdd.setEnabled(false);
 	 
@@ -307,6 +317,7 @@ public class ViewUsuario extends JInternalFrame {
 		modelUsuario.setUsuNome(txtNome.getText());
 		modelUsuario.setUsuLogin(txtLogin.getText());
 		modelUsuario.setUsuSenha(String.valueOf(psSenha.getPassword()));
+		modelUsuario.setUsuNivel(cbNivel.getSelectedItem().toString());
 
 		if (controllerUsuario.salvarUsuarioController(modelUsuario) > 0) {
 			JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso", "Error", JOptionPane.ERROR_MESSAGE);
@@ -326,6 +337,7 @@ public class ViewUsuario extends JInternalFrame {
 		modelUsuario.setUsuNome(txtNome.getText());
 		modelUsuario.setUsuLogin(txtLogin.getText());
 		modelUsuario.setUsuSenha(String.valueOf(psSenha.getPassword()));
+		modelUsuario.setUsuNivel(cbNivel.getSelectedItem().toString());
 		
 
 		if (controllerUsuario.atualizarUsuarioController(modelUsuario)) {

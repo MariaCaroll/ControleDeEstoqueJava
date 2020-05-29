@@ -23,12 +23,14 @@ public class DAOUsuario extends ConexaoMsql {
                
                     + "usu_nome,"
                     + "usu_login,"
-                    + "usu_senha"
+                    + "usu_senha,"
+                    + "usu_nivel"
                 + ") VALUES ("
                    
                     + "'" + pModelUsuario.getUsuNome() + "',"
                     + "'" + pModelUsuario.getUsuLogin() + "',"
-                    + "'" + pModelUsuario.getUsuSenha() + "'"
+                    + "'" + pModelUsuario.getUsuSenha() + "',"
+                    + "'" + pModelUsuario.getUsuNivel() + "'"
                 + ");"
             );
         }catch(Exception e){
@@ -53,7 +55,8 @@ public class DAOUsuario extends ConexaoMsql {
                     + "pk_id_usuario,"
                     + "usu_nome,"
                     + "usu_login,"
-                    + "usu_senha"
+                    + "usu_senha,"
+                    + "usu_nivel"
                  + " FROM"
                      + " tbl_usuario"
                  + " WHERE"
@@ -66,6 +69,7 @@ public class DAOUsuario extends ConexaoMsql {
                 modelUsuario.setUsuNome(this.getResultSet().getString(2));
                 modelUsuario.setUsuLogin(this.getResultSet().getString(3));
                 modelUsuario.setUsuSenha(this.getResultSet().getString(4));
+                modelUsuario.setUsuNivel(this.getResultSet().getString(5));
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -89,7 +93,8 @@ public class DAOUsuario extends ConexaoMsql {
                     + "pk_id_usuario,"
                     + "usu_nome,"
                     + "usu_login,"
-                    + "usu_senha"
+                    + "usu_senha,"
+                    + "usu_nivel"
                  + " FROM"
                      + " tbl_usuario"
                 + ";"
@@ -101,6 +106,7 @@ public class DAOUsuario extends ConexaoMsql {
                 modelUsuario.setUsuNome(this.getResultSet().getString(2));
                 modelUsuario.setUsuLogin(this.getResultSet().getString(3));
                 modelUsuario.setUsuSenha(this.getResultSet().getString(4));
+                modelUsuario.setUsuNivel(this.getResultSet().getString(5));
                 listamodelUsuario.add(modelUsuario);
             }
         }catch(Exception e){
@@ -124,7 +130,8 @@ public class DAOUsuario extends ConexaoMsql {
                     + "pk_id_usuario = '" + pModelUsuario.getIdUsuario() + "',"
                     + "usu_nome = '" + pModelUsuario.getUsuNome() + "',"
                     + "usu_login = '" + pModelUsuario.getUsuLogin() + "',"
-                    + "usu_senha = '" + pModelUsuario.getUsuSenha() + "'"
+                    + "usu_senha = '" + pModelUsuario.getUsuSenha() + "',"
+                    + "usu_nivel = '" + pModelUsuario.getUsuNivel() + "'"
                 + " WHERE "
                     + "pk_id_usuario = '" + pModelUsuario.getIdUsuario() + "'"
                 + ";"
@@ -168,7 +175,8 @@ public class DAOUsuario extends ConexaoMsql {
 	                    + "pk_id_usuario,"
 	                    + "usu_nome,"
 	                    + "usu_login,"
-	                    + "usu_senha"
+	                    + "usu_senha,"
+	                    + "usu_nivel"
 	                 + " FROM"
 	                     + " tbl_usuario"
 	                 + " WHERE"
@@ -191,4 +199,37 @@ public class DAOUsuario extends ConexaoMsql {
 	        }
 
 	}
+	
+    public ModelUsuario getUsuarioDAO(String pLogin){
+        ModelUsuario modelUsuario = new ModelUsuario();
+        try {
+            this.conectar();
+            this.executarSQL(
+                "SELECT "
+                    + "pk_id_usuario,"
+                    + "usu_nome,"
+                    + "usu_login,"
+                    + "usu_senha,"
+                    + "usu_nivel"
+                 + " FROM"
+                     + " tbl_usuario"
+                 + " WHERE"
+                     + " usu_login = '" + pLogin+ "'"
+                + ";"
+            );
+
+            while(this.getResultSet().next()){
+                modelUsuario.setIdUsuario(this.getResultSet().getInt(1));
+                modelUsuario.setUsuNome(this.getResultSet().getString(2));
+                modelUsuario.setUsuLogin(this.getResultSet().getString(3));
+                modelUsuario.setUsuSenha(this.getResultSet().getString(4));
+                modelUsuario.setUsuNivel(this.getResultSet().getString(5));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            this.fecharConexao();
+        }
+        return modelUsuario;
+    }
 }

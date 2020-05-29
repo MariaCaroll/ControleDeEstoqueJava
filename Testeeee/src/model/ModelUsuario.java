@@ -9,6 +9,7 @@ public class ModelUsuario {
     private String usuNome;
     private String usuLogin;
     private String usuSenha;
+    private String usuNivel;
 
     /**
     * Construtor
@@ -71,8 +72,17 @@ public class ModelUsuario {
         return this.usuSenha;
     }
 
-    @Override
+    public String getUsuNivel() {
+		return usuNivel;
+	}
+
+	public void setUsuNivel(String usuNivel) {
+		this.usuNivel = usuNivel;
+	}
+
+	@Override
     public String toString(){
-        return "ModelUsuario {" + "::idUsuario = " + this.idUsuario + "::usuNome = " + this.usuNome + "::usuLogin = " + this.usuLogin + "::usuSenha = " + this.usuSenha +  "}";
+        return "ModelUsuario {" + "::idUsuario = " + this.idUsuario + "::usuNome = " + this.usuNome + 
+        		"::usuLogin = " + this.usuLogin + "::usuSenha = " + this.usuSenha +  "::usuNivel = " + this.usuNivel + "}";
     }
 }

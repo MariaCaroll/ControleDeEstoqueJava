@@ -8,7 +8,7 @@ public class ModelVendasProdutos {
     private int idVendaProduto;
     private int produto;
     private int vendas;
-    private Double venProValor;
+    private float venProValor;
     private int venProQuantidade;
 
     /**
@@ -62,13 +62,13 @@ public class ModelVendasProdutos {
     * seta o valor de venProValor
     * @param pVenProValor
     */
-    public void setVenProValor(Double pVenProValor){
+    public void setVenProValor(float pVenProValor){
         this.venProValor = pVenProValor;
     }
     /**
     * @return venProValor
     */
-    public Double getVenProValor(){
+    public float getVenProValor(){
         return this.venProValor;
     }
 

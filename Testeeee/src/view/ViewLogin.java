@@ -9,7 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import conexoes.ConexaoMsql;
 import controller.ControllerUsuario;
+import model.ModelSessaoUsuario;
 import model.ModelUsuario;
 
 import javax.swing.JTextField;
@@ -31,6 +33,9 @@ public class ViewLogin extends JFrame {
 	
 	ControllerUsuario controllerUsuario = new ControllerUsuario();
 	ModelUsuario modelUsuario = new ModelUsuario();
+	ModelSessaoUsuario modelSessaoUsuario = new ModelSessaoUsuario();
+	ConexaoMsql conexao = new ConexaoMsql();
+	
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
@@ -55,32 +60,38 @@ public class ViewLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public ViewLogin() {
+		setForeground(new Color(199, 21, 133));
+		setTitle("Login");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 632, 408);
+		setBounds(100, 100, 415, 367);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);  
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 616, 369);
+		panel.setBounds(0, 0, 409, 338);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Usu\u00E1rio");
+		lblNewLabel.setForeground(new Color(199, 21, 133));
 		lblNewLabel.setFont(new Font("Serif", Font.BOLD, 14));
-		lblNewLabel.setBounds(331, 105, 72, 14);
+		lblNewLabel.setBounds(215, 74, 72, 14);
 		panel.add(lblNewLabel);
 		
 		txtLogin = new JTextField();
 		txtLogin.setFont(new Font("Serif", Font.BOLD, 14));
-		txtLogin.setBounds(331, 130, 140, 20);
+		txtLogin.setBounds(215, 99, 140, 23);
 		panel.add(txtLogin);
 		txtLogin.setColumns(10);
 		
 		lblNewLabel_1 = new JLabel("Senha");
+		lblNewLabel_1.setForeground(new Color(199, 21, 133));
 		lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(331, 174, 46, 14);
+		lblNewLabel_1.setBounds(215, 143, 46, 14);
 		panel.add(lblNewLabel_1);
 		
 		psSenha = new JPasswordField();
@@ -94,7 +105,7 @@ public class ViewLogin extends JFrame {
 			}
 		});
 		psSenha.setFont(new Font("Tahoma", Font.BOLD, 14));
-		psSenha.setBounds(331, 199, 140, 20);
+		psSenha.setBounds(215, 168, 140, 23);
 		panel.add(psSenha);
 		
 		JButton btnNewButton = new JButton("");
@@ -104,24 +115,32 @@ public class ViewLogin extends JFrame {
 				logar();
 			}
 		});
-		btnNewButton.setBounds(401, 261, 80, 80);
+		btnNewButton.setBounds(273, 220, 80, 80);
 		btnNewButton.setBackground(new Color(0, 0,0,10));
 		panel.add(btnNewButton);
 		
 		lblNewLabel_2 = new JLabel("Autentique-se");
-		lblNewLabel_2.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 17));
-		lblNewLabel_2.setBounds(331, 65, 140, 28);
+		lblNewLabel_2.setForeground(new Color(199, 21, 133));
+		lblNewLabel_2.setFont(new Font("Serif", Font.BOLD, 17));
+		lblNewLabel_2.setBounds(215, 34, 140, 28);
 		panel.add(lblNewLabel_2);
 		
-		lblNewLabel_3 = new JLabel("Vendas");
+		lblNewLabel_3 = new JLabel("SYSTEM");
+		lblNewLabel_3.setForeground(new Color(199, 21, 133));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel_3.setBounds(62, 72, 161, 59);
+		lblNewLabel_3.setBounds(33, 117, 103, 59);
 		panel.add(lblNewLabel_3);
 		
-		lblNewLabel_4 = new JLabel("BL");
+		lblNewLabel_4 = new JLabel("ML");
+		lblNewLabel_4.setForeground(new Color(199, 21, 133));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel_4.setBounds(62, 145, 161, 59);
+		lblNewLabel_4.setBounds(60, 48, 46, 59);
 		panel.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("");
+		lblNewLabel_5.setIcon(new ImageIcon(ViewLogin.class.getResource("/icones/Black Ros\u00E9.jpg")));
+		lblNewLabel_5.setBounds(0, 0, 409, 338);
+		panel.add(lblNewLabel_5);
 	}
 	
 	public void logar() {
@@ -129,10 +148,74 @@ public class ViewLogin extends JFrame {
 		modelUsuario.setUsuSenha(String.valueOf(psSenha.getPassword()));
 		
 		if(controllerUsuario.getValidarUsuarioController(modelUsuario)) {
-			ViewPrincipal principal = new ViewPrincipal();
-			principal.setVisible(true);
-			//principal.lblUsuario.setText();
-			this.dispose();
+			modelUsuario = controllerUsuario.getUsuarioController(txtLogin.getText());
+		
+			//nivel de acesso para os tipos de usuarios 
+			if(modelUsuario.getUsuNivel().equals("ADMIN")) {
+				ViewPrincipal principal = new ViewPrincipal();
+				principal.setVisible(true);
+				//pega o nome do usuário e seta no menu principal
+				principal.lblUsu.setText(txtLogin.getText());
+				principal.lblUsu.setForeground(new Color(189, 42, 11));;
+				principal.lblNivel.setText(modelUsuario.getUsuNivel());
+				principal.lblNivel.setForeground(new Color(189, 42, 11));
+				principal.txtAMsg.setText("Acesso Total");
+				principal.txtAMsg.setForeground(new Color(189, 42, 11));
+				principal.menuCadastro.setForeground(new Color(189, 42, 11));
+				principal.menuVenda.setForeground(new Color(189, 42, 11));
+				principal.menuOpcoes.setForeground(new Color(189, 42, 11));
+				
+				//habilitar os campos
+				principal.itemCliente.setEnabled(true);
+				principal.itemProd.setEnabled(true);
+				principal.itemUsu.setEnabled(true);
+				principal.mnVenda.setEnabled(true);
+				principal.mnVPDV.setEnabled(true);
+				this.dispose();
+				
+			} else {
+				if(modelUsuario.getUsuNivel().equals("ESTOQUE")) {
+					ViewPrincipal principal = new ViewPrincipal();
+					principal.setVisible(true);
+					
+					//pega o nome do usuário e seta no menu principal
+					principal.lblUsu.setText(txtLogin.getText());
+					principal.lblUsu.setForeground(new Color(11, 23, 137));;
+					principal.lblNivel.setText(modelUsuario.getUsuNivel());
+					principal.lblNivel.setForeground(new Color(11, 23, 137));
+					principal.txtAMsg.setText("Acesso a penas para cadastro de produto, Certo!!   Para Mais informações contate o Gerente");
+					principal.txtAMsg.setForeground(new Color(11, 23, 137));
+					principal.menuCadastro.setForeground(new Color(11, 23, 137));
+					principal.menuVenda.setForeground(new Color(11, 23, 137));
+					principal.menuOpcoes.setForeground(new Color(11, 23, 137));
+					
+					//habilitar os campos
+					principal.itemProd.setEnabled(true);
+					dispose();
+				} else {
+					ViewPrincipal principal = new ViewPrincipal();
+					principal.setVisible(true);
+					
+					//pega o nome do usuário e seta no menu principal
+					principal.lblUsu.setText(txtLogin.getText());
+					principal.lblUsu.setForeground(new Color(9, 131, 15));;
+					principal.lblNivel.setText(modelUsuario.getUsuNivel());
+					principal.lblNivel.setForeground(new Color(9, 131, 15));
+					principal.txtAMsg.setText("Acesso a penas para cadastro de cliente e efeturar vendas, Certo!!   Para Mais informações contate o Gerente");
+					principal.txtAMsg.setForeground(new Color(9, 131, 15));
+					principal.menuCadastro.setForeground(new Color(9, 131, 15));
+					principal.menuVenda.setForeground(new Color(9, 131, 15));
+					principal.menuOpcoes.setForeground(new Color(9, 131, 15));
+					
+					//habilitar os campos
+					principal.mnVenda.setEnabled(true);
+					principal.mnVPDV.setEnabled(true);
+					principal.itemCliente.setEnabled(true);
+					dispose();
+				}
+			}
+	
+			
 			
 		}else {
 			JOptionPane.showMessageDialog(null, "Usuario e/ou senha inválido","Error", JOptionPane.ERROR_MESSAGE);

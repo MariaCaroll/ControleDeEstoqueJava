@@ -11,9 +11,9 @@ public class ModelVendas {
     private int idVenda;
     private int cliente;
     private Date venDataVenda;
-    private Double venValorLiquido;
-    private Double venValorBruto;
-    private Double venDesconto;
+    private float venValorLiquido;
+    private float venValorBruto;
+    private float venDesconto;
 
     /**
     * Construtor
@@ -66,27 +66,27 @@ public class ModelVendas {
     * seta o valor de venValorLiquido
     * @param pVenValorLiquido
     */
-    public void setVenValorLiquido(Double pVenValorLiquido){
+    public void setVenValorLiquido(float pVenValorLiquido){
         this.venValorLiquido = pVenValorLiquido;
     }
     /**
     * @return venValorLiquido
     */
-    public Double getVenValorLiquido(){
+    public float getVenValorLiquido(){
         return this.venValorLiquido;
     }
 
     /**
     * seta o valor de venValorBruto
-    * @param pVenValorBruto
+    * @param d
     */
-    public void setVenValorBruto(Double pVenValorBruto){
-        this.venValorBruto = pVenValorBruto;
+    public void setVenValorBruto(float d){
+        this.venValorBruto = d;
     }
     /**
     * @return venValorBruto
     */
-    public Double getVenValorBruto(){
+    public float getVenValorBruto(){
         return this.venValorBruto;
     }
 
@@ -94,13 +94,13 @@ public class ModelVendas {
     * seta o valor de venDesconto
     * @param pVenDesconto
     */
-    public void setVenDesconto(Double pVenDesconto){
+    public void setVenDesconto(float pVenDesconto){
         this.venDesconto = pVenDesconto;
     }
     /**
     * @return venDesconto
     */
-    public Double getVenDesconto(){
+    public float getVenDesconto(){
         return this.venDesconto;
     }
 

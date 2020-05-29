@@ -6,7 +6,7 @@ public class ModelProdutos {
 	
 	private int idProduto;
 	private String proNome;
-	private Double proValor;
+	private float proValor;
 	private int proEstoque;
 	
 	
@@ -29,11 +29,11 @@ public class ModelProdutos {
 	public void setProNome(String proNome) {
 		this.proNome = proNome;
 	}
-	public Double getProValor() {
+	public float getProValor() {
 		return proValor;
 	}
-	public void setProValor(Double proValor) {
-		this.proValor = proValor;
+	public void setProValor(float d) {
+		this.proValor = d;
 	}
 	
 	

@@ -71,9 +71,9 @@ public class DAOVendas extends ConexaoMsql {
                 modelVendas.setIdVenda(this.getResultSet().getInt(1));
                 modelVendas.setCliente(this.getResultSet().getInt(2));
                 modelVendas.setVenDataVenda(this.getResultSet().getDate(3));
-                modelVendas.setVenValorLiquido(this.getResultSet().getDouble(4));
-                modelVendas.setVenValorBruto(this.getResultSet().getDouble(5));
-                modelVendas.setVenDesconto(this.getResultSet().getDouble(6));
+                modelVendas.setVenValorLiquido(this.getResultSet().getFloat(4));
+                modelVendas.setVenValorBruto(this.getResultSet().getFloat(5));
+                modelVendas.setVenDesconto(this.getResultSet().getFloat(6));
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -110,9 +110,9 @@ public class DAOVendas extends ConexaoMsql {
                 modelVendas.setIdVenda(this.getResultSet().getInt(1));
                 modelVendas.setCliente(this.getResultSet().getInt(2));
                 modelVendas.setVenDataVenda(this.getResultSet().getDate(3));
-                modelVendas.setVenValorLiquido(this.getResultSet().getDouble(4));
-                modelVendas.setVenValorBruto(this.getResultSet().getDouble(5));
-                modelVendas.setVenDesconto(this.getResultSet().getDouble(6));
+                modelVendas.setVenValorLiquido(this.getResultSet().getFloat(4));
+                modelVendas.setVenValorBruto(this.getResultSet().getFloat(5));
+                modelVendas.setVenDesconto(this.getResultSet().getFloat(6));
                 listamodelVendas.add(modelVendas);
             }
         }catch(Exception e){
