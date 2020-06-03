@@ -60,18 +60,6 @@ public class DaoProdutos extends ConexaoMsql {
 	 */
 
 	public boolean excluirProdutosDAO(int pIdProduto) {
-//
-//		try {
-//
-//			this.conectar();
-//			return this.executarUpdateDeleteSQL("DELETE FROM tbl_produto WHERE pk_id_produto = " + pIdProduto + "; ");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		} finally {
-//			this.fecharConexao();
-//		}
 
 		try {
 			this.conectar();

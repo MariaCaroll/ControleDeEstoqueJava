@@ -74,7 +74,7 @@ public class ViewPrincipal extends JFrame {
 		});
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 980, 560);
+		setBounds(100, 100, 980, 580);
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -144,6 +144,7 @@ public class ViewPrincipal extends JFrame {
 		menuVenda.add(mnVenda);
 		
 		mnVPDV = new JMenuItem("PDV");
+		mnVPDV.setIcon(new ImageIcon(ViewPrincipal.class.getResource("/icones/shopping-cart_25343.png")));
 		mnVPDV.setEnabled(false);
 		mnVPDV.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -178,6 +179,7 @@ public class ViewPrincipal extends JFrame {
 		});
 		menuOpcoes.add(itemSair);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(204, 153, 153));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -185,7 +187,7 @@ public class ViewPrincipal extends JFrame {
 		desktop = new JDesktopPane();
 		desktop.setBackground(new Color(255, 204, 204));
 		desktop.setForeground(new Color(255, 204, 204));
-		desktop.setBounds(10, 11, 750, 456);
+		desktop.setBounds(10, 11, 750, 491);
 		contentPane.add(desktop);
 		
 		lblData = new JLabel("DATA");
@@ -210,7 +212,7 @@ public class ViewPrincipal extends JFrame {
 		
 		txtAMsg = new JTextPane();
 		txtAMsg.setEditable(false);
-		txtAMsg.setBackground(new Color(192, 192, 192));
+		txtAMsg.setBackground(new Color(204, 153, 153));
 		txtAMsg.setText("Sua Mensagem aqui");
 		txtAMsg.setBounds(787, 122, 161, 107);
 		contentPane.add(txtAMsg);

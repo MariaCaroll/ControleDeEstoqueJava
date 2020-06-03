@@ -16,7 +16,7 @@ public class ConexaoMsql {
 	private ResultSet resultSet = null;
 
 	public void conectar() {
-		String servidor = "jdbc:mysql://localhost/dbvendasbl?verifyServerCertificate=false&useTimezone=true&serverTimezone=UTC";
+		String servidor = "jdbc:mysql://localhost/dbvendasbl?useTimezone=true&serverTimezone=America/Sao_Paulo";
 		String usuario = "root";
 		String senha = "MariaLima";
 		String driver = "com.mysql.cj.jdbc.Driver";

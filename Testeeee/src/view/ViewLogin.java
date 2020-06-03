@@ -73,11 +73,12 @@ public class ViewLogin extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 409, 338);
+		panel.setBackground(new Color(151,21,52));
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Usu\u00E1rio");
-		lblNewLabel.setForeground(new Color(199, 21, 133));
+		lblNewLabel.setForeground(Color.PINK);
 		lblNewLabel.setFont(new Font("Serif", Font.BOLD, 14));
 		lblNewLabel.setBounds(215, 74, 72, 14);
 		panel.add(lblNewLabel);
@@ -89,7 +90,7 @@ public class ViewLogin extends JFrame {
 		txtLogin.setColumns(10);
 		
 		lblNewLabel_1 = new JLabel("Senha");
-		lblNewLabel_1.setForeground(new Color(199, 21, 133));
+		lblNewLabel_1.setForeground(Color.PINK);
 		lblNewLabel_1.setFont(new Font("Serif", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(215, 143, 46, 14);
 		panel.add(lblNewLabel_1);
@@ -120,26 +121,33 @@ public class ViewLogin extends JFrame {
 		panel.add(btnNewButton);
 		
 		lblNewLabel_2 = new JLabel("Autentique-se");
-		lblNewLabel_2.setForeground(new Color(199, 21, 133));
+		lblNewLabel_2.setForeground(Color.PINK);
 		lblNewLabel_2.setFont(new Font("Serif", Font.BOLD, 17));
 		lblNewLabel_2.setBounds(215, 34, 140, 28);
 		panel.add(lblNewLabel_2);
 		
 		lblNewLabel_3 = new JLabel("SYSTEM");
-		lblNewLabel_3.setForeground(new Color(199, 21, 133));
+		lblNewLabel_3.setForeground(Color.PINK);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel_3.setBounds(33, 117, 103, 59);
+		lblNewLabel_3.setBounds(23, 61, 103, 59);
 		panel.add(lblNewLabel_3);
 		
 		lblNewLabel_4 = new JLabel("ML");
-		lblNewLabel_4.setForeground(new Color(199, 21, 133));
+		lblNewLabel_4.setForeground(Color.PINK);
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel_4.setBounds(60, 48, 46, 59);
+		lblNewLabel_4.setBounds(55, 25, 46, 40);
 		panel.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon(ViewLogin.class.getResource("/icones/Black Ros\u00E9.jpg")));
-		lblNewLabel_5.setBounds(0, 0, 409, 338);
+		JLabel lblNewLabel_6 = new JLabel("Write once, ");
+		lblNewLabel_6.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_6.setForeground(Color.PINK);
+		lblNewLabel_6.setBounds(23, 143, 72, 28);
+		panel.add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_5 = new JLabel("run anywhere");
+		lblNewLabel_5.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_5.setForeground(Color.PINK);
+		lblNewLabel_5.setBounds(23, 175, 92, 16);
 		panel.add(lblNewLabel_5);
 	}
 	
@@ -153,9 +161,11 @@ public class ViewLogin extends JFrame {
 			//nivel de acesso para os tipos de usuarios 
 			if(modelUsuario.getUsuNivel().equals("ADMIN")) {
 				ViewPrincipal principal = new ViewPrincipal();
+				
 				principal.setVisible(true);
 				//pega o nome do usuário e seta no menu principal
 				principal.lblUsu.setText(txtLogin.getText());
+				
 				principal.lblUsu.setForeground(new Color(189, 42, 11));;
 				principal.lblNivel.setText(modelUsuario.getUsuNivel());
 				principal.lblNivel.setForeground(new Color(189, 42, 11));
@@ -176,10 +186,12 @@ public class ViewLogin extends JFrame {
 			} else {
 				if(modelUsuario.getUsuNivel().equals("ESTOQUE")) {
 					ViewPrincipal principal = new ViewPrincipal();
+					
 					principal.setVisible(true);
 					
 					//pega o nome do usuário e seta no menu principal
 					principal.lblUsu.setText(txtLogin.getText());
+					
 					principal.lblUsu.setForeground(new Color(11, 23, 137));;
 					principal.lblNivel.setText(modelUsuario.getUsuNivel());
 					principal.lblNivel.setForeground(new Color(11, 23, 137));
@@ -194,10 +206,12 @@ public class ViewLogin extends JFrame {
 					dispose();
 				} else {
 					ViewPrincipal principal = new ViewPrincipal();
+					
 					principal.setVisible(true);
 					
 					//pega o nome do usuário e seta no menu principal
 					principal.lblUsu.setText(txtLogin.getText());
+					
 					principal.lblUsu.setForeground(new Color(9, 131, 15));;
 					principal.lblNivel.setText(modelUsuario.getUsuNivel());
 					principal.lblNivel.setForeground(new Color(9, 131, 15));

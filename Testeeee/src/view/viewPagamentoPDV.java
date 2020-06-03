@@ -21,6 +21,8 @@ import javax.swing.border.TitledBorder;
 import componentes.UJTextField;
 import controller.ControllerFormaPagamento;
 import model.ModelFormaPagamento;
+import util.Mascaras;
+
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
@@ -33,31 +35,43 @@ import java.awt.event.WindowEvent;
 public class viewPagamentoPDV extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+
 	private JLabel lblData;
 	
 	ArrayList<ModelFormaPagamento> listaModelFormaPagamentos = new ArrayList<ModelFormaPagamento>();
 	ControllerFormaPagamento controllerFormaPagamento = new ControllerFormaPagamento();
+	Mascaras mascaras = new Mascaras();
 	private float valorTotalPdv;
-	private float desconto;
+	private float descontoPDV;
 	private float valorRecebido;
+	public float valorAPagar;
 	private float troco;
+	
 	private String formaPagamento;
-	private boolean pago;
+	
 	
 	public float getValorTotalPdv() {
 		return valorTotalPdv;
+	}
+
+	public float getValorAPagar() {
+		return valorAPagar;
+	}
+
+	public void setValorAPagar(float valorAPagar) {
+		this.valorAPagar = valorAPagar;
 	}
 
 	public void setValorTotalPdv(float valorTotalPdv) {
 		this.valorTotalPdv = valorTotalPdv;
 	}
 
-	public float getDesconto() {
-		return desconto;
+	public float getDescontoPDV() {
+		return descontoPDV;
 	}
 
-	public void setDesconto(float desconto) {
-		this.desconto = desconto;
+	public void setDescontoPDV(float descontoPDV) {
+		this.descontoPDV = descontoPDV;
 	}
 
 	public float getValorRecebido() {
@@ -86,22 +100,13 @@ public class viewPagamentoPDV extends JDialog {
 	public void setTextFieldValorTotal() {
 		txtSub.setText(String.valueOf(this.valorTotalPdv));
 	}
-
-
-	public boolean isPago() {
-		return pago;
-	}
-
-	public void setPago(boolean pago) {
-		this.pago = pago;
-	}
-
+	
 
 
 
 	private JComboBox cbFormaPagamento;
 	private JTextField txtSub;
-	private JTextField txtDesconto;
+	public JTextField txtDesPaga;
 	private JTextField txtValorRecebido;
 	private JTextField txtTroco;
 	private JLabel lblValorPagar;
@@ -113,6 +118,7 @@ public class viewPagamentoPDV extends JDialog {
 	public static void main(String[] args) {
 		try {
 			viewPagamentoPDV dialog = new viewPagamentoPDV();
+			dialog.getContentPane().setBackground(new Color(180,22,51));
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -128,15 +134,15 @@ public class viewPagamentoPDV extends JDialog {
 			@Override
 			public void windowActivated(WindowEvent e) {
 				
-				listarFormaPagamento();
+				
 				calcularPagamento();
-				pago = false;
 			}
 		});
-		setBounds(100, 100, 492, 407);
+		setBounds(100, 100, 492, 455);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		getContentPane().setBackground(new Color(180,22,51));
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null); 
 		
@@ -147,16 +153,17 @@ public class viewPagamentoPDV extends JDialog {
 		lblValorPagar.setBackground(new Color(204, 204, 204));
 		lblValorPagar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorPagar.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Total a Pagar", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		lblValorPagar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblValorPagar.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblValorPagar.setBounds(131, 198, 261, 82);
 		contentPanel.add(lblValorPagar);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Troco");
-		lblNewLabel_1_1.setBounds(20, 307, 46, 14);
+		lblNewLabel_1_1.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblNewLabel_1_1.setBounds(185, 304, 46, 14);
 		contentPanel.add(lblNewLabel_1_1);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(204, 204, 204));
+		panel.setBackground(new Color(180,22,51));
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(56, 11, 388, 176);
 		contentPanel.add(panel);
@@ -175,7 +182,12 @@ public class viewPagamentoPDV extends JDialog {
 		panel.add(lblNewLabel);
 		
 		cbFormaPagamento = new JComboBox();
-		cbFormaPagamento.setModel(new DefaultComboBoxModel(new String[] {"", "Dinheiro", "Cart\u00E3o de cr\u00E9dito  1x", "Cart\u00E3o de cr\u00E9dito  2x", "Cart\u00E3o de cr\u00E9dito  3x", "Cart\u00E3o de cr\u00E9dito  4x", "Cart\u00E3o de d\u00E9bito", "", ""}));
+		cbFormaPagamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtDesPaga.requestFocus();
+			}
+		});
+		cbFormaPagamento.setModel(new DefaultComboBoxModel(new String[] {"", "Dinheiro", "Cart\u00E3o de cr\u00E9dito  1x", "Cart\u00E3o de cr\u00E9dito  2x", "Cart\u00E3o de cr\u00E9dito  3x", "Cart\u00E3o de cr\u00E9dito  4x", "Cart\u00E3o de d\u00E9bito", ""}));
 		cbFormaPagamento.setBounds(131, 64, 145, 22);
 		panel.add(cbFormaPagamento);
 		
@@ -190,22 +202,41 @@ public class viewPagamentoPDV extends JDialog {
 		panel.add(txtSub);
 		txtSub.setColumns(10);
 		
-		txtDesconto = new JTextField();
-		txtDesconto.addFocusListener(new FocusAdapter() {
+		txtDesPaga = new JTextField();
+		txtDesPaga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtValorRecebido.requestFocus();
+			}
+		});
+		txtDesPaga.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				
 				calcularPagamento();
 			}
 		});
-		txtDesconto.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtDesconto.setColumns(10);
-		txtDesconto.setBounds(131, 102, 116, 22);
-		panel.add(txtDesconto);
+		txtDesPaga.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtDesPaga.setColumns(10);
+		txtDesPaga.setBounds(131, 102, 116, 22);
+		panel.add(txtDesPaga);
 		
 		txtValorRecebido = new JTextField();
+		txtValorRecebido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				descontoPDV = Float.parseFloat(txtDesPaga.getText().replace(",", "."));
+				valorRecebido = Float.parseFloat(txtValorRecebido.getText());
+				troco = Float.parseFloat(txtTroco.getText());
+				valorTotalPdv = Float.parseFloat(lblValorPagar.getText());
+				formaPagamento = cbFormaPagamento.getSelectedItem().toString();
+				limparPagamento();
+				dispose();
+			
+			}
+		});
 		txtValorRecebido.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
+			
 				calcularPagamento();
 			}
 		});
@@ -215,43 +246,36 @@ public class viewPagamentoPDV extends JDialog {
 		panel.add(txtValorRecebido);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBounds(6, 324, 476, 38);
+			buttonPane.setBounds(6, 372, 464, 38);
 			contentPanel.add(buttonPane);
 			buttonPane.setLayout(null);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						
-						desconto = Float.parseFloat(txtDesconto.getText().replace(",", "."));
-						valorRecebido = Float.parseFloat(txtValorRecebido.getText());
-						troco = Float.parseFloat(txtTroco.getText());
-						valorTotalPdv = Float.parseFloat(lblValorPagar.getText());
-						formaPagamento = cbFormaPagamento.getSelectedItem().toString();
-						pago = true;
-						
-						dispose();
-					
-					}
-		
-					
-				});
-				okButton.setBounds(315, 6, 52, 28);
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						limparPagamento();
 						dispose();
 					}
 				});
-				cancelButton.setBounds(372, 6, 80, 28);
+				cancelButton.setBounds(370, 6, 80, 28);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
+			
+			JButton btnNewButton = new JButton("finalizar");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					descontoPDV = Float.parseFloat(txtDesPaga.getText().replace(",", "."));
+					valorRecebido = Float.parseFloat(txtValorRecebido.getText());
+					troco = Float.parseFloat(txtTroco.getText());
+					valorTotalPdv = Float.parseFloat(lblValorPagar.getText());
+					formaPagamento = cbFormaPagamento.getSelectedItem().toString();
+					limparPagamento();
+					dispose();
+				}
+			});
+			btnNewButton.setBounds(268, 6, 90, 28);
+			buttonPane.add(btnNewButton);
 		}
 		
 		lblData = new JLabel("");
@@ -262,50 +286,66 @@ public class viewPagamentoPDV extends JDialog {
 		lblData.setText(formato.format(data));
 		
 		txtTroco = new JTextField();
+		txtTroco.setFont(new Font("SansSerif", Font.BOLD, 15));
 		
 		txtTroco.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtTroco.setEditable(false);
 		txtTroco.setColumns(10);
-		txtTroco.setBounds(56, 303, 61, 22);
+		txtTroco.setBounds(235, 292, 81, 38);
 		contentPanel.add(txtTroco);
 	}
 
 
 
 	
-	private void listarFormaPagamento() {
-		listaModelFormaPagamentos = controllerFormaPagamento.getListaFormaPagamentoController();
-		cbFormaPagamento.removeAllItems();
-		for( int i = 0; i< listaModelFormaPagamentos.size(); i++) {
-			cbFormaPagamento.addItem(listaModelFormaPagamentos.get(i).getDescricaoForPag());
-		}
-	}
+//	private void listarFormaPagamento() {
+//		listaModelFormaPagamentos = controllerFormaPagamento.getListaFormaPagamentoController();
+//		cbFormaPagamento.removeAllItems();
+//		for( int i = 0; i< listaModelFormaPagamentos.size(); i++) {
+//			cbFormaPagamento.addItem(listaModelFormaPagamentos.get(i).getDescricaoForPag());
+//		}
+//	}
 	
+
 	private void calcularPagamento() {
-		float subtTotal;
-		float desconto;
-		float valorRecebido;
-		float valorPagar;
-		float troco;
+	
+		valorTotalPdv = Float.parseFloat(txtSub.getText());
 		
-		subtTotal = Float.parseFloat(txtSub.getText());
-		if(!txtDesconto.getText().isEmpty()) {
-			desconto = Float.parseFloat(txtDesconto.getText().replace(",", "."));
-		}else {
-			desconto = 0;
+		try {
+			descontoPDV = Float.parseFloat(txtDesPaga.getText().replace(",", "."));
+			
+		} catch (Exception e) {
+			descontoPDV = 0;
+			txtDesPaga.setText("0");
 		}
-		if(!txtValorRecebido.getText().isEmpty()) {
+	
+			
+		try {
 			valorRecebido = Float.parseFloat(txtValorRecebido.getText().replace(",", "."));
-		}else {
+		} catch (Exception e) {
 			valorRecebido = 0;
 		}
-	
 		
-		// calcular valor a pagar
-		valorPagar = subtTotal - desconto;
-		lblValorPagar.setText(String.valueOf(valorPagar));
-		//calcular troco
-		troco = valorRecebido - valorPagar;
-		txtTroco.setText(String.valueOf(troco));
+		try {
+			valorRecebido = Float.parseFloat(txtValorRecebido.getText().replace(",", "."));
+		} catch (Exception e) {
+			valorRecebido = 0;
+			txtValorRecebido.setText("0");
+		}
+		valorAPagar = valorTotalPdv - descontoPDV;
+		lblValorPagar.setText(mascaras.arredondamentoComPontoDuasCasasString(valorAPagar));
+		
+		troco = valorRecebido - valorAPagar;
+		txtTroco.setText(mascaras.arredondamentoComPontoDuasCasasString(troco));
+	}
+	
+	
+	
+	
+	private void limparPagamento() {
+		txtSub.setText(null);
+		txtDesPaga.setText(null);
+		txtValorRecebido.setText(null);
+		txtTroco.setText(null);
 	}
 }

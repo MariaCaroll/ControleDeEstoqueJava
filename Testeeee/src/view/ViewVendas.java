@@ -40,6 +40,7 @@ import model.ModelVendas;
 import model.ModelVendasCliente;
 import model.ModelVendasProdutos;
 import util.BLDatas;
+import util.Mascaras;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -73,6 +74,7 @@ public class ViewVendas extends JInternalFrame {
 	ControllerVendas controllerVendas = new ControllerVendas();
 
 	ModelVendas modelVendas = new ModelVendas();
+	Mascaras mascaras = new Mascaras();
 	BLDatas blDatas = new BLDatas();
 	
 	ControllerVendasProdutos controllerVendasProdutos = new ControllerVendasProdutos();
@@ -488,18 +490,7 @@ public class ViewVendas extends JInternalFrame {
 			} else {
 				JOptionPane.showMessageDialog(null, "Erro ao excluir a venda", "ERRO", JOptionPane.ERROR_MESSAGE);
 			} 
-				
-			/*} else {
-				JOptionPane.showMessageDialog(null, "Erro ao excluir a venda", "ERRO", JOptionPane.ERROR_MESSAGE);
-			}
-		
-
-		if (controllerVendas.excluirVendasController(codigo)) {
-			//JOptionPane.showMessageDialog(null, "Venda excluida", "Atenção", JOptionPane.WARNING_MESSAGE);
-			carregarVendas();
-		} else {
-			//JOptionPane.showMessageDialog(null, "Erro ao excluir a venda", "ERRO", JOptionPane.ERROR_MESSAGE);
-		}*/
+	
 		}
 	}
 
@@ -534,7 +525,7 @@ public class ViewVendas extends JInternalFrame {
 
 		}
 
-		txtSubtotal.setText(String.valueOf(soma));
+		txtSubtotal.setText(mascaras.arredondamentoComPontoDuasCasasString(soma));
 		desconto();
 	}
 

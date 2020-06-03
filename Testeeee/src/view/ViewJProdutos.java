@@ -244,11 +244,6 @@ public class ViewJProdutos extends JInternalFrame {
 		txtValorProd.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
 		txtValorProd.setBounds(619, 36, 71, 20);
 		panel.add(txtValorProd);
-		
-		JLabel lblNewLabel_5 = new JLabel("");
-		lblNewLabel_5.setIcon(new ImageIcon(ViewJProdutos.class.getResource("/background/Red Ocean.jpg")));
-		lblNewLabel_5.setBounds(1, 0, 714, 383);
-		panel.add(lblNewLabel_5);
 
 	}
 	
@@ -287,7 +282,7 @@ public class ViewJProdutos extends JInternalFrame {
 		
 		modelProdutos.setProNome(txtNomePro.getText());
 		modelProdutos.setproEstoque(Integer.parseInt(txtEstoquPro.getText()));
-		modelProdutos.setProValor(formatador.converterVirgulaParaPonto(txtValorProd.getText()));
+		modelProdutos.setProValor(Float.parseFloat(txtValorProd.getText().replace(",", ".")));
 		
 			if(controllerProdutos.salvarProdutoController(modelProdutos) > 0 ) {
 				JOptionPane.showMessageDialog(null, "Erro ao cadastrar produtos", "Atenção", JOptionPane.WARNING_MESSAGE);
